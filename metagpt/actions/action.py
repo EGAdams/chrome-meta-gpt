@@ -54,6 +54,9 @@ class Action(ABC):
         if not system_msgs:
             system_msgs = []
         system_msgs.append(self.prefix)
+        # write prompt to temp_action.md
+        with open("temp_action.md", "w") as f:
+            f.write(prompt)
         content = await self.llm.aask(prompt, system_msgs)
         logger.debug(content)
         output_class = ActionOutput.create_model_class(output_class_name, output_data_mapping)
