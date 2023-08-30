@@ -76,7 +76,7 @@ requirement_pool = [
 ]
 ```
 
-## Anything UNCLEAR
+## Anything Unclear
 The original requirement did not specify the platform for the game (web, mobile, desktop) or any specific features or themes for the game's story and puzzles. More information on these aspects could help in further refining the product requirements and design.
 """
 
@@ -95,12 +95,12 @@ For testing, we can use the PyTest framework. This is a mature full-featured Pyt
 "adventure_game"
 ```
 
-## File list:
+## File List:
 ```python
 file_list = ["main.py", "room.py", "player.py", "game.py", "object.py", "puzzle.py", "test_game.py"]
 ```
 
-## Data structures and interface definitions:
+## Data Structures and Interface Definitions:
 ```mermaid
 classDiagram
     class Room{
@@ -138,7 +138,7 @@ classDiagram
     Game "1" -- "1" Player
 ```
 
-## Program call flow:
+## Program Call Flow:
 ```mermaid
 sequenceDiagram
     participant main as main.py
@@ -155,12 +155,12 @@ sequenceDiagram
     Game->>Game: end()
 ```
 
-## Anything UNCLEAR:
+## Anything Unclear
 The original requirements did not specify whether the game should have a save/load feature, multiplayer support, or any specific graphical user interface. More information on these aspects could help in further refining the product design and requirements.
 """
 
 
-PROJECT_MANAGEMENT_SAMPLE = '''## Required Python third-party packages: Provided in requirements.txt format
+PROJECT_MANAGEMENT_SAMPLE = '''## Required Swift third-party packages: Provided in requirements.txt format
 ```python
 "pytest==6.2.5"
 ```
@@ -209,7 +209,7 @@ Shared knowledge for this project includes understanding the basic principles of
 """
 ```
 
-## Anything UNCLEAR: Provide as Plain text. Make clear here. For example, don't forget a main entry. don't forget to init 3rd party libs.
+## Anything Unclear Provide as Plain text. Make clear here. For example, don't forget a main entry. don't forget to init 3rd party libs.
 ```python
 """
 The original requirements did not specify whether the game should have a save/load feature, multiplayer support, or any specific graphical user interface. More information on these aspects could help in further refining the product design and requirements.

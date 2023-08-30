@@ -29,7 +29,7 @@ Attention: Use '##' to split sections, not '#', and '## <SECTION_NAME>' SHOULD W
 ## Selected Elements:Provide as Plain text, up to 5 specified elements, clear and simple
 ## HTML Layout:Provide as Plain text, use standard HTML code
 ## CSS Styles (styles.css):Provide as Plain text,use standard css code
-## Anything UNCLEAR:Provide as Plain text. Make clear here.
+## Anything UnclearProvide as Plain text. Make clear here.
 
 """
 
@@ -120,7 +120,7 @@ body {
     display: none;
 }
 
-## Anything UNCLEAR
+## Anything Unclear
 There are no unclear points.
 
 """
@@ -130,7 +130,7 @@ OUTPUT_MAPPING = {
     "Selected Elements": (str, ...),
     "HTML Layout": (str, ...),
     "CSS Styles (styles.css)": (str, ...),
-    "Anything UNCLEAR": (str, ...),
+    "Anything Unclear": (str, ...),
 }
 
 
@@ -180,7 +180,7 @@ class UIDesign(Action):
     @parse
     def parse_requirement(self, context: str):
         """Parse UI Design draft from the context using regex."""
-        pattern = r"## UI Design draft.*?\n(.*?)## Anything UNCLEAR"
+        pattern = r"## UI Design draft.*?\n(.*?)## Anything Unclear"
         return context, pattern
 
     @parse
@@ -191,7 +191,7 @@ class UIDesign(Action):
 
     @parse
     def parse_css_code(self, context: str):
-        pattern = r"```css.*?\n(.*?)## Anything UNCLEAR"
+        pattern = r"```css.*?\n(.*?)## Anything Unclear"
         return context, pattern
 
     @parse
@@ -208,7 +208,8 @@ class UIDesign(Action):
         prompts_batch = []
         for icon_prompt in icons:
             # fixme: 添加icon lora
-            prompt = engine.construct_payload(icon_prompt + ".<lora:WZ0710_AW81e-3_30e3b128d64T32_goon0.5>")
+            prompt = engine.construct_payload(
+                icon_prompt + ".<lora:WZ0710_AW81e-3_30e3b128d64T32_goon0.5>")
             prompts_batch.append(prompt)
         await engine.run_t2i(prompts_batch)
         logger.info("Finish icon design using StableDiffusion API")
@@ -232,7 +233,8 @@ class UIDesign(Action):
         context = requirements[-1].content
         ui_design_draft = self.parse_requirement(context=context)
         # todo: parse requirements str
-        prompt = PROMPT_TEMPLATE.format(context=ui_design_draft, format_example=FORMAT_EXAMPLE)
+        prompt = PROMPT_TEMPLATE.format(
+            context=ui_design_draft, format_example=FORMAT_EXAMPLE)
         logger.info(prompt)
         ui_describe = await self._aask_v1(prompt, "ui_design", OUTPUT_MAPPING)
         logger.info(ui_describe.content)

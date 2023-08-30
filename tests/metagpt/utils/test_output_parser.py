@@ -14,7 +14,8 @@ from metagpt.utils.common import OutputParser
 
 def test_parse_blocks():
     test_text = "##block1\nThis is block 1.\n##block2\nThis is block 2."
-    expected_result = {'block1': 'This is block 1.', 'block2': 'This is block 2.'}
+    expected_result = {'block1': 'This is block 1.',
+                       'block2': 'This is block 2.'}
     assert OutputParser.parse_blocks(test_text) == expected_result
 
 
@@ -29,15 +30,23 @@ def test_parse_code():
 
 def test_parse_python_code():
     expected_result = "print('Hello, world!')"
-    assert OutputParser.parse_python_code("```python\nprint('Hello, world!')```") == expected_result
-    assert OutputParser.parse_python_code("```python\nprint('Hello, world!')") == expected_result
-    assert OutputParser.parse_python_code("print('Hello, world!')") == expected_result
-    assert OutputParser.parse_python_code("print('Hello, world!')```") == expected_result
-    assert OutputParser.parse_python_code("print('Hello, world!')```") == expected_result
+    assert OutputParser.parse_python_code(
+        "```python\nprint('Hello, world!')```") == expected_result
+    assert OutputParser.parse_python_code(
+        "```python\nprint('Hello, world!')") == expected_result
+    assert OutputParser.parse_python_code(
+        "print('Hello, world!')") == expected_result
+    assert OutputParser.parse_python_code(
+        "print('Hello, world!')```") == expected_result
+    assert OutputParser.parse_python_code(
+        "print('Hello, world!')```") == expected_result
     expected_result = "print('```Hello, world!```')"
-    assert OutputParser.parse_python_code("```python\nprint('```Hello, world!```')```") == expected_result
-    assert OutputParser.parse_python_code("The code is: ```python\nprint('```Hello, world!```')```") == expected_result
-    assert OutputParser.parse_python_code("xxx.\n```python\nprint('```Hello, world!```')```\nxxx") == expected_result
+    assert OutputParser.parse_python_code(
+        "```python\nprint('```Hello, world!```')```") == expected_result
+    assert OutputParser.parse_python_code(
+        "The code is: ```python\nprint('```Hello, world!```')```") == expected_result
+    assert OutputParser.parse_python_code(
+        "xxx.\n```python\nprint('```Hello, world!```')```\nxxx") == expected_result
 
     with pytest.raises(ValueError):
         OutputParser.parse_python_code("xxx =")
@@ -60,13 +69,14 @@ def test_parse_file_list():
 
 def test_parse_data():
     test_data = "##block1\n```python\nprint('Hello, world!')\n```\n##block2\nfiles=['file1', 'file2', 'file3']"
-    expected_result = {'block1': "print('Hello, world!')", 'block2': ['file1', 'file2', 'file3']}
+    expected_result = {'block1': "print('Hello, world!')", 'block2': [
+        'file1', 'file2', 'file3']}
     assert OutputParser.parse_data(test_data) == expected_result
 
 
 if __name__ == '__main__':
     t_text = '''
-## Required Python third-party packages
+## Required Swift third-party packages
 ```python
 """
 flask==1.1.2
@@ -149,7 +159,7 @@ paths:
 """
 ```
 
-## Anything UNCLEAR
+## Anything Unclear
 We need clarification on how the high score should be stored. Should it persist across sessions (stored in a database or a file) or should it reset every time the game is restarted? Also, should the game speed increase as the snake grows, or should it remain constant throughout the game?
         '''
 
@@ -161,7 +171,7 @@ We need clarification on how the high score should be stored. Should it persist 
         "Competitive Quadrant Chart": (str, ...),
         "Requirement Analysis": (str, ...),
         "Requirement Pool": (List[Tuple[str, str]], ...),
-        "Anything UNCLEAR": (str, ...),
+        "Anything Unclear": (str, ...),
     }
     t_text1 = '''## Original Requirements:
 
@@ -228,7 +238,7 @@ The product should be a web-based version of the game "Fly Bird" that is engagin
 ]
 ```
 
-## Anything UNCLEAR:
+## Anything Unclear
 
 There are no unclear points.
     '''

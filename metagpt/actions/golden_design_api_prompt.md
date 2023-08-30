@@ -54,6 +54,6 @@ Here's an example format to follow:
 - Accurately use the classes and API defined in the previous section, covering object CRUD operations and initialization.
 - The syntax must be correct.
 
-## Anything UNCLEAR: 
+## Anything Unclear 
 - Provide in plain text.
 - Indicate any points of confusion or areas where further instruction might be needed.

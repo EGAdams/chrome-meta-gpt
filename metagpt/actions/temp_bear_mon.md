@@ -100,7 +100,7 @@ The product should be a ...
 ## UI Design draft
 Give a basic function description, and a draft
 
-## Anything UNCLEAR
+## Anything Unclear
 There are no unclear points.
 ---
 
@@ -124,4 +124,4 @@ ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. AND '## <SECTION_NAME>' SHOULD W
 ## Requirement Pool: Provided as Python list[str, str], the parameters are requirement description, priority(P0/P1/P2), respectively, comply with PEP standards; no more than 5 requirements and consider to make its difficulty lower
 
 ## UI Design draft: Provide as Plain text. Be simple. Describe the elements and functions, also provide a simple style description and layout description.
-## Anything UNCLEAR: Provide as Plain text. Make clear here.
+## Anything Unclear Provide as Plain text. Make clear here.

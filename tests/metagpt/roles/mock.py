@@ -94,7 +94,7 @@ SYSTEM_DESIGN = '''## Python package name
 ]
 ```
 
-## Data structures and interface definitions
+## Data Structures and Interface Definitions
 ```mermaid
 classDiagram
     class Main {
@@ -129,7 +129,7 @@ classDiagram
     Index --> KnowledgeBase
 ```
 
-## Program call flow
+## Program Call Flow
 ```mermaid
 sequenceDiagram
     participant M as Main
@@ -184,7 +184,7 @@ task_list = [
 '''
 
 
-TASKS_TOMATO_CLOCK = '''## Required Python third-party packages: Provided in requirements.txt format
+TASKS_TOMATO_CLOCK = '''## Required Swift third-party packages: Provided in requirements.txt format
 ```python
 Flask==2.1.1
 Jinja2==3.1.0
@@ -224,25 +224,25 @@ task_list = [
 TASK = """smart_search_engine/knowledge_base.py"""
 
 STRS_FOR_PARSING = [
-"""
+    """
 ## 1
 ```python
 a
 ```
 """,
-"""
+    """
 ##2
 ```python
 "a"
 ```
 """,
-"""
+    """
 ##  3
 ```python
 a = "a"
 ```
 """,
-"""
+    """
 ## 4
 ```python
 a =  'a'
@@ -252,7 +252,9 @@ a =  'a'
 
 
 class MockMessages:
-    req = Message(role="Boss", content=BOSS_REQUIREMENT, cause_by=BossRequirement)
+    req = Message(role="Boss", content=BOSS_REQUIREMENT,
+                  cause_by=BossRequirement)
     prd = Message(role="Product Manager", content=PRD, cause_by=WritePRD)
-    system_design = Message(role="Architect", content=SYSTEM_DESIGN, cause_by=WriteDesign)
+    system_design = Message(
+        role="Architect", content=SYSTEM_DESIGN, cause_by=WriteDesign)
     tasks = Message(role="Project Manager", content=TASKS, cause_by=WriteTasks)

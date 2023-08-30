@@ -8,7 +8,7 @@ Role: You are a project manager; the goal is to break down tasks according to PR
 Requirements: Based on the context, fill in the following missing information, note that all sections are returned in Swift code triple quote form seperatedly. Here the granularity of the task is a file, if there are any missing files, you can supplement them
 Attention: Use '##' to split sections, not '#', and '## <SECTION_NAME>' SHOULD WRITE BEFORE the code and triple quote.
 
-## Required Python third-party packages: Provided in requirements.txt format
+## Required Swift third-party packages: Provided in requirements.txt format
 
 ## Required Other language third-party packages: Provided in requirements.txt format
 
@@ -20,13 +20,13 @@ Attention: Use '##' to split sections, not '#', and '## <SECTION_NAME>' SHOULD W
 
 ## Shared Knowledge: Anything that should be public like utils' functions, config's variables details that should make clear first. 
 
-## Anything UNCLEAR: Provide as Plain text. Make clear here. For example, don't forget a main entry. don't forget to init 3rd party libs.
+## Anything Unclear Provide as Plain text. Make clear here. For example, don't forget a main entry. don't forget to init 3rd party libs.
 
 '''
 
 FORMAT_EXAMPLE = '''
 ---
-## Required Python third-party packages
+## Required Swift third-party packages
 ```python
 """
 flask==1.1.2
@@ -71,7 +71,7 @@ description: A JSON object ...
 """
 ```
 
-## Anything UNCLEAR
+## Anything Unclear
 We need ... how to start.
 ---
 '''

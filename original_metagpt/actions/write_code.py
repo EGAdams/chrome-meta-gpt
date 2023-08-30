@@ -22,7 +22,7 @@ ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenc
 1. Do your best to implement THIS ONLY ONE FILE. ONLY USE EXISTING API. IF NO API, IMPLEMENT IT.
 2. Requirement: Based on the context, implement one following code file, note to return only in code form, your code will be part of the entire project, so please implement complete, reliable, reusable code snippets
 3. Attention1: If there is any setting, ALWAYS SET A DEFAULT VALUE, ALWAYS USE STRONG TYPE AND EXPLICIT VARIABLE.
-4. Attention2: YOU MUST FOLLOW "Data structures and interface definitions". DONT CHANGE ANY DESIGN.
+4. Attention2: YOU MUST FOLLOW "Data Structures and Interface Definitions". DONT CHANGE ANY DESIGN.
 5. Think before writing: What should be implemented and provided in this document?
 6. CAREFULLY CHECK THAT YOU DONT MISS ANY NECESSARY CLASS/FUNCTION IN THIS FILE.
 7. Do not use public member functions that do not exist in your design.
@@ -57,7 +57,8 @@ class WriteCode(Action):
 
         design = [i for i in context if i.cause_by == WriteDesign][0]
 
-        ws_name = CodeParser.parse_str(block="Python package name", text=design.content)
+        ws_name = CodeParser.parse_str(
+            block="Python package name", text=design.content)
         ws_path = WORKSPACE_ROOT / ws_name
         if f"{ws_name}/" not in filename and all(i not in filename for i in ["requirements.txt", ".md"]):
             ws_path = ws_path / ws_name

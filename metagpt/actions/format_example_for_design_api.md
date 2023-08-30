@@ -3,19 +3,19 @@
 - We are going to use the following sutable open source tools ...
 - The challenges posed by the requirements are ...
 
-## Swift package name
+## Swift Package Name
 ```python
 "airport_gauge_test"
 ```
 
-## File list
+## File List
 ```swift
 [
     "main.swift",
 ]
 ```
 
-## Data structures and interface definitions
+## Data Structures and Interface Definitions
 ```mermaid
 classDiagram
     class Speedometer{
@@ -25,7 +25,7 @@ classDiagram
     TestReport "1" -- "1" ListOfTests: has
 ```
 
-## Program call flow
+## Program Call Flow
 ```mermaid
 sequenceDiagram
     participant M as Main

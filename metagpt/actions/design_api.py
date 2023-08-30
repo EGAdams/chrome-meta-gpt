@@ -24,11 +24,11 @@ FORMAT_EXAMPLE = Path(__file__).parent.joinpath(
 
 OUTPUT_MAPPING = {
     "Implementation approach": (str, ...),
-    "Swift package name": (str, ...),
-    "File list": (List[str], ...),
-    "Data structures and interface definitions": (str, ...),
-    "Program call flow": (str, ...),
-    "Anything UNCLEAR": (str, ...)}
+    "Swift Package Name": (str, ...),
+    "File List": (List[str], ...),
+    "Data Structures and Interface Definitions": (str, ...),
+    "Program Call Flow": (str, ...),
+    "Anything Unclear": (str, ...)}
 
 
 class WriteDesign(Action):
@@ -54,9 +54,9 @@ class WriteDesign(Action):
 
     def _save_system_design(self, docs_path, resources_path, content):
         data_api_design = CodeParser.parse_code(
-            block="Data structures and interface definitions", text=content)
+            block="Data Structures and Interface Definitions", text=content)
         seq_flow = CodeParser.parse_code(
-            block="Program call flow", text=content)
+            block="Program Call Flow", text=content)
         mermaid_to_file(data_api_design, resources_path / 'data_api_design')
         mermaid_to_file(seq_flow, resources_path / 'seq_flow')
         system_design_file = docs_path / 'system_design.md'
@@ -67,11 +67,11 @@ class WriteDesign(Action):
         if isinstance(system_design, ActionOutput):
             content = system_design.content
             ws_name = CodeParser.parse_str(
-                block="Swift package name", text=content)
+                block="Swift Package Name", text=content)
         else:
             content = system_design
             ws_name = CodeParser.parse_str(
-                block="Swift package name", text=system_design)
+                block="Swift Package Name", text=system_design)
         workspace = WORKSPACE_ROOT / ws_name
         self.recreate_workspace(workspace)
         docs_path = workspace / 'docs'

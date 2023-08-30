@@ -21,7 +21,7 @@ ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenc
 ```
 1. Check 0: Is the code implemented as per the requirements?
 2. Check 1: Are there any issues with the code logic?
-3. Check 2: Does the existing code follow the "Data structures and interface definitions"?
+3. Check 2: Does the existing code follow the "Data Structures and Interface Definitions"?
 4. Check 3: Is there a function in the code that is omitted or not fully implemented that needs to be implemented?
 5. Check 4: Does the code have unnecessary or lack dependencies?
 ```
@@ -73,7 +73,8 @@ class WriteCodeReview(Action):
 
     async def run(self, context, code, filename):
         format_example = FORMAT_EXAMPLE.format(filename=filename)
-        prompt = PROMPT_TEMPLATE.format(context=context, code=code, filename=filename, format_example=format_example)
+        prompt = PROMPT_TEMPLATE.format(
+            context=context, code=code, filename=filename, format_example=format_example)
         logger.info(f'Code review {filename}..')
         code = await self.write_code(prompt)
         # code_rsp = await self._aask_v1(prompt, "code_rsp", OUTPUT_MAPPING)

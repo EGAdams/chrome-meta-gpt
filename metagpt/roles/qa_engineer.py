@@ -33,9 +33,9 @@ class QaEngineer(Role):
     @classmethod
     def parse_workspace(cls, system_design_msg: Message) -> str:
         if not system_design_msg.instruct_content:
-            return system_design_msg.instruct_content.dict().get("Swift package name")
-        return CodeParser.parse_str(block="Swift package name", text=system_design_msg.content)
-    
+            return system_design_msg.instruct_content.dict().get("Swift Package Name")
+        return CodeParser.parse_str(block="Swift Package Name", text=system_design_msg.content)
+
     def get_workspace(self, return_proj_dir=True) -> Path:
         msg = self._rc.memory.get_by_action(WriteDesign)[-1]
         if not msg:
@@ -114,13 +114,16 @@ class QaEngineer(Role):
             test_file_name=file_info["test_file_name"],
             command=file_info["command"],
             working_directory=proj_dir,  # workspace/package_name, will run tests/test_xxx.py here
-            additional_python_paths=[development_code_dir],  # workspace/package_name/package_name,
+            # workspace/package_name/package_name,
+            additional_python_paths=[development_code_dir],
             # import statement inside package code needs this
         )
 
-        recipient = parse_recipient(result_msg)  # the recipient might be Engineer or myself
+        # the recipient might be Engineer or myself
+        recipient = parse_recipient(result_msg)
         content = str(file_info) + FILENAME_CODE_SEP + result_msg
-        msg = Message(content=content, role=self.profile, cause_by=RunCode, sent_from=self.profile, send_to=recipient)
+        msg = Message(content=content, role=self.profile,
+                      cause_by=RunCode, sent_from=self.profile, send_to=recipient)
         self._publish_message(msg)
 
     async def _debug_error(self, msg):
@@ -128,7 +131,8 @@ class QaEngineer(Role):
         file_name, code = await DebugError().run(context)
         if file_name:
             self.write_file(file_name, code)
-            recipient = msg.sent_from  # send back to the one who ran the code for another run, might be one's self
+            # send back to the one who ran the code for another run, might be one's self
+            recipient = msg.sent_from
             msg = Message(
                 content=file_info, role=self.profile, cause_by=DebugError, sent_from=self.profile, send_to=recipient
             )

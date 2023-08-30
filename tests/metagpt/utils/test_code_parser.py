@@ -11,7 +11,7 @@ import pytest
 from metagpt.utils.common import CodeParser
 
 t_text = '''
-## Required Python third-party packages
+## Required Swift third-party packages
 ```python
 """
 flask==1.1.2
@@ -94,7 +94,7 @@ paths:
 """
 ```
 
-## Anything UNCLEAR
+## Anything Unclear
 We need clarification on how the high score should be stored. Should it persist across sessions (stored in a database or a file) or should it reset every time the game is restarted? Also, should the game speed increase as the snake grows, or should it remain constant throughout the game?
         '''
 

@@ -75,7 +75,7 @@ The product should be a high-performance iOS application that functions as an ai
 ## UI Design draft:
 The speedometer gauge will have a circular design with a customizable rim, face, and ticks. It will display the current speed, yaw, and other metrics in real-time. The gauge will have smooth visual transitions, thanks to Core Animation. Users will be able to adjust the gauge metrics and save them for later retrieval. The application will have an intuitive user interface, compatible with different iOS devices.
 
-## Anything UNCLEAR:
+## Anything Unclear
 There are no unclear points.]
 
 ## Example Format
@@ -85,19 +85,19 @@ Here's an example format to follow:
 - We are going to use the following sutable open source tools ...
 - The challenges posed by the requirements are ...
 
-## Swift package name
+## Swift Package Name
 ```python
 "airport_gauge_test"
 ```
 
-## File list
+## File List
 ```swift
 [
     "main.swift",
 ]
 ```
 
-## Data structures and interface definitions
+## Data Structures and Interface Definitions
 ```mermaid
 classDiagram
     class Speedometer{
@@ -107,7 +107,7 @@ classDiagram
     TestReport "1" -- "1" ListOfTests: has
 ```
 
-## Program call flow
+## Program Call Flow
 ```mermaid
 sequenceDiagram
     participant M as Main
@@ -166,6 +166,6 @@ sequenceDiagram
 - Accurately use the classes and API defined in the previous section, covering object CRUD operations and initialization.
 - The syntax must be correct.
 
-## Anything UNCLEAR: 
+## Anything Unclear 
 - Provide in plain text.
 - Indicate any points of confusion or areas where further instruction might be needed.

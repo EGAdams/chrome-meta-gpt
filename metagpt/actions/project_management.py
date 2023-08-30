@@ -22,7 +22,7 @@ Role: You are a project manager; the goal is to break down tasks according to PR
 Requirements: Based on the context, fill in the following missing information, note that all sections are returned in Swift code triple quote form seperatedly. Here the granularity of the task is a file, if there are any missing files, you can supplement them
 Attention: Use '##' to split sections, not '#', and '## <SECTION_NAME>' SHOULD WRITE BEFORE the code and triple quote.
 
-## Required Python third-party packages: Provided in requirements.txt format
+## Required Swift third-party packages: Provided in requirements.txt format
 
 ## Required Other language third-party packages: Provided in requirements.txt format
 
@@ -34,13 +34,13 @@ Attention: Use '##' to split sections, not '#', and '## <SECTION_NAME>' SHOULD W
 
 ## Shared Knowledge: Anything that should be public like utils' functions, config's variables details that should make clear first. 
 
-## Anything UNCLEAR: Provide as Plain text. Make clear here. For example, don't forget a main entry. don't forget to init 3rd party libs.
+## Anything Unclear Provide as Plain text. Make clear here. For example, don't forget a main entry. don't forget to init 3rd party libs.
 
 '''
 
 FORMAT_EXAMPLE = '''
 ---
-## Required Python third-party packages
+## Required Swift third-party packages
 ```python
 """
 flask==1.1.2
@@ -85,19 +85,19 @@ description: A JSON object ...
 """
 ```
 
-## Anything UNCLEAR
+## Anything Unclear
 We need ... how to start.
 ---
 '''
 
 OUTPUT_MAPPING = {
-    "Required Python third-party packages": (str, ...),
+    "Required Swift third-party packages": (str, ...),
     "Required Other language third-party packages": (str, ...),
     "Full API spec": (str, ...),
     "Logic Analysis": (List[Tuple[str, str]], ...),
     "Task list": (List[str], ...),
     "Shared Knowledge": (str, ...),
-    "Anything UNCLEAR": (str, ...),
+    "Anything Unclear": (str, ...),
 }
 
 
@@ -107,16 +107,19 @@ class WriteTasks(Action):
         super().__init__(name, context, llm)
 
     def _save(self, context, rsp):
-        ws_name = CodeParser.parse_str(block="Swift package name", text=context[-1].content)
+        ws_name = CodeParser.parse_str(
+            block="Swift Package Name", text=context[-1].content)
         file_path = WORKSPACE_ROOT / ws_name / 'docs/api_spec_and_tasks.md'
         file_path.write_text(rsp.content)
 
         # Write requirements.txt
         requirements_path = WORKSPACE_ROOT / ws_name / 'requirements.txt'
-        requirements_path.write_text(rsp.instruct_content.dict().get("Required Swift third-party packages").strip('"\n'))
+        requirements_path.write_text(rsp.instruct_content.dict().get(
+            "Required Swift third-party packages").strip('"\n'))
 
     async def run(self, context):
-        prompt = PROMPT_TEMPLATE.format(context=context, format_example=FORMAT_EXAMPLE)
+        prompt = PROMPT_TEMPLATE.format(
+            context=context, format_example=FORMAT_EXAMPLE)
         rsp = await self._aask_v1(prompt, "task", OUTPUT_MAPPING)
         self._save(context, rsp)
         return rsp

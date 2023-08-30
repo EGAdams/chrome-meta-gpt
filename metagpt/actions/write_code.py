@@ -15,14 +15,14 @@ from tenacity import retry, stop_after_attempt, wait_fixed
 
 PROMPT_TEMPLATE = """
 NOTICE
-Role: You are a professional engineer; the main goal is to write PEP8 compliant, elegant, modular, easy to read and maintain Python 3.9 code (but you can also use other programming language)
+Role: You are a professional engineer; the main goal is to write PEP8 compliant, elegant, modular, easy to read and maintain Swift code.
 ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenced "Format example".
 
 ## Code: {filename} Write code with triple quoto, based on the following list and context.
 1. Do your best to implement THIS ONLY ONE FILE. ONLY USE EXISTING API. IF NO API, IMPLEMENT IT.
 2. Requirement: Based on the context, implement one following code file, note to return only in code form, your code will be part of the entire project, so please implement complete, reliable, reusable code snippets
 3. Attention1: If there is any setting, ALWAYS SET A DEFAULT VALUE, ALWAYS USE STRONG TYPE AND EXPLICIT VARIABLE.
-4. Attention2: YOU MUST FOLLOW "Data structures and interface definitions". DONT CHANGE ANY DESIGN.
+4. Attention2: YOU MUST FOLLOW "Data Structures and Interface Definitions". DONT CHANGE ANY DESIGN.
 5. Think before writing: What should be implemented and provided in this document?
 6. CAREFULLY CHECK THAT YOU DONT MISS ANY NECESSARY CLASS/FUNCTION IN THIS FILE.
 7. Do not use public member functions that do not exist in your design.
@@ -57,7 +57,8 @@ class WriteCode(Action):
 
         design = [i for i in context if i.cause_by == WriteDesign][0]
 
-        ws_name = CodeParser.parse_str(block="Python package name", text=design.content)
+        ws_name = CodeParser.parse_str(
+            block="Python package name", text=design.content)
         ws_path = WORKSPACE_ROOT / ws_name
         if f"{ws_name}/" not in filename and all(i not in filename for i in ["requirements.txt", ".md"]):
             ws_path = ws_path / ws_name
@@ -75,7 +76,7 @@ class WriteCode(Action):
     async def run(self, context, filename):
         prompt = PROMPT_TEMPLATE.format(context=context, filename=filename)
         logger.info(f'Writing {filename}..')
-        code = await self.write_code(prompt)
+        code = await self.write_code(prompt) # switch to 16k model here!  Maybe catch exception and retry with 16k model?
         # code_rsp = await self._aask_v1(prompt, "code_rsp", OUTPUT_MAPPING)
         # self._save(context, filename, code)
         return code
