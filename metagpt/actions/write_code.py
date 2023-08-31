@@ -34,7 +34,7 @@ ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenc
 ## Format example
 -----
 ## Code: {filename}
-```python
+```swift
 ## {filename}
 ...
 ```
@@ -58,7 +58,7 @@ class WriteCode(Action):
         design = [i for i in context if i.cause_by == WriteDesign][0]
 
         ws_name = CodeParser.parse_str(
-            block="Python package name", text=design.content)
+            block="Swift Package Name", text=design.content)
         ws_path = WORKSPACE_ROOT / ws_name
         if f"{ws_name}/" not in filename and all(i not in filename for i in ["requirements.txt", ".md"]):
             ws_path = ws_path / ws_name
@@ -76,6 +76,13 @@ class WriteCode(Action):
     async def run(self, context, filename):
         prompt = PROMPT_TEMPLATE.format(context=context, filename=filename)
         logger.info(f'Writing {filename}..')
+        
+        # write this prompt to a markdown file so that we can read it first
+        # then we can use the markdown file as the prompt
+        file = open("write_code_prompt.md", "w")
+        file.write(prompt)
+        file.close()
+        
         code = await self.write_code(prompt) # switch to 16k model here!  Maybe catch exception and retry with 16k model?
         # code_rsp = await self._aask_v1(prompt, "code_rsp", OUTPUT_MAPPING)
         # self._save(context, filename, code)

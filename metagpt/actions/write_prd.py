@@ -68,21 +68,21 @@ FORMAT_EXAMPLE = """
 The boss ... 
 
 ## Product Goals
-```python
+```swift
 [
     "Create a ...",
 ]
 ```
 
 ## User Stories
-```python
+```swift
 [
     "As a user, ...",
 ]
 ```
 
 ## Competitive Analysis
-```python
+```swift
 [
     "Python Snake Game: ...",
 ]
@@ -100,7 +100,7 @@ quadrantChart
 The product should be a ...
 
 ## Requirement Pool
-```python
+```swift
 [
     ("End game ...", "P0")
 ]

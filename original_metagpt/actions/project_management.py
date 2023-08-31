@@ -3,7 +3,7 @@
 """
 @Time    : 2023/5/11 19:12
 @Author  : alexanderwu
-@File    : project_management.py
+@File    : project_management.swift
 """
 from typing import List, Tuple
 
@@ -41,7 +41,7 @@ Attention: Use '##' to split sections, not '#', and '## <SECTION_NAME>' SHOULD W
 FORMAT_EXAMPLE = '''
 ---
 ## Required Swift third-party packages
-```python
+```swift
 """
 flask==1.1.2
 bcrypt==3.2.0
@@ -49,14 +49,14 @@ bcrypt==3.2.0
 ```
 
 ## Required Other language third-party packages
-```python
+```swift
 """
 No third-party ...
 """
 ```
 
 ## Full API spec
-```python
+```swift
 """
 openapi: 3.0.0
 ...
@@ -65,23 +65,23 @@ description: A JSON object ...
 ```
 
 ## Logic Analysis
-```python
+```swift
 [
-    ("game.py", "Contains ..."),
+    ("game.swift", "Contains ..."),
 ]
 ```
 
 ## Task list
-```python
+```swift
 [
-    "game.py",
+    "game.swift",
 ]
 ```
 
 ## Shared Knowledge
-```python
+```swift
 """
-'game.py' contains ...
+'game.swift' contains ...
 """
 ```
 
@@ -108,7 +108,7 @@ class WriteTasks(Action):
 
     def _save(self, context, rsp):
         ws_name = CodeParser.parse_str(
-            block="Python package name", text=context[-1].content)
+            block="Swift Package Name", text=context[-1].content)
         file_path = WORKSPACE_ROOT / ws_name / 'docs/api_spec_and_tasks.md'
         file_path.write_text(rsp.content)
 

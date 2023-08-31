@@ -4,7 +4,7 @@
 - The challenges posed by the requirements are ...
 
 ## Swift Package Name
-```python
+```swift
 "airport_gauge_test"
 ```
 

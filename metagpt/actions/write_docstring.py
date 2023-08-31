@@ -45,7 +45,7 @@ class ExampleError(Exception):
 ```
 
 ### Output Example
-```python
+```swift
 {example}
 ```
 '''

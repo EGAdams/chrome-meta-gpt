@@ -54,7 +54,7 @@ FORMAT_EXAMPLE = """
 5. ...
 
 ## Rewrite Code: {filename}
-```python
+```swift
 ## {filename}
 ...
 ```

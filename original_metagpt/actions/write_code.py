@@ -13,6 +13,31 @@ from metagpt.schema import Message
 from metagpt.utils.common import CodeParser
 from tenacity import retry, stop_after_attempt, wait_fixed
 
+SWIFT_PROMPT_TEMPLATE = """
+NOTICE:
+You are tasked with the role of a professional engineer. Your primary objective is to write Swift code that adheres to Swift's coding standards and best practices. Your code should be elegant, modular, easy to read, and maintainable.
+
+IMPORTANT:
+- Use '##' to delineate sections. Do not use '#'. Refer to the "Format example" for the expected output format.
+- Your code should be enclosed within triple quotes.
+- Focus on implementing the file as indicated by '{filename}'. Use existing APIs where available. If an API doesn't exist, create it.
+- The code you produce should be a complete, reliable, and reusable component of a larger project.
+- Always provide default values for any settings. Ensure strong typing and use explicit variable names.
+- Adhere strictly to the "Data Structures and Interface Definitions". Do not alter the design.
+- Before coding, think about what needs to be implemented based on the provided context.
+- Double-check to ensure all necessary classes or functions for this file are included.
+- Avoid using public member functions that aren't part of your design.
+
+## Context
+{context}
+
+## Format example
+## Code: {filename}
+```swift
+## {filename}
+...
+"""
+
 PROMPT_TEMPLATE = """
 NOTICE
 Role: You are a professional engineer; the main goal is to write PEP8 compliant, elegant, modular, easy to read and maintain Python 3.9 code (but you can also use other programming language)
@@ -34,13 +59,12 @@ ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenc
 ## Format example
 -----
 ## Code: {filename}
-```python
+```swift
 ## {filename}
 ...
 ```
 -----
 """
-
 
 class WriteCode(Action):
     def __init__(self, name="WriteCode", context: list[Message] = None, llm=None):
@@ -58,7 +82,7 @@ class WriteCode(Action):
         design = [i for i in context if i.cause_by == WriteDesign][0]
 
         ws_name = CodeParser.parse_str(
-            block="Python package name", text=design.content)
+            block="Swift Package Name", text=design.content)
         ws_path = WORKSPACE_ROOT / ws_name
         if f"{ws_name}/" not in filename and all(i not in filename for i in ["requirements.txt", ".md"]):
             ws_path = ws_path / ws_name
@@ -74,7 +98,7 @@ class WriteCode(Action):
         return code
 
     async def run(self, context, filename):
-        prompt = PROMPT_TEMPLATE.format(context=context, filename=filename)
+        prompt = SWIFT_PROMPT_TEMPLATE.format(context=context, filename=filename)
         logger.info(f'Writing {filename}..')
         code = await self.write_code(prompt)
         # code_rsp = await self._aask_v1(prompt, "code_rsp", OUTPUT_MAPPING)

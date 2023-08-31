@@ -20,7 +20,7 @@ NOTICE
 Attention: Use '##' to split sections, not '#', and '## <SECTION_NAME>' SHOULD WRITE BEFORE the test case or script and triple quotes.
 -----
 ## Given the following code, please write appropriate test cases using Python's unittest framework to verify the correctness and robustness of this code:
-```python
+```swift
 {code_to_test}
 ```
 Note that the code to test is at {source_file_path}, we will put your test code at {workspace}/tests/{test_file_name}, and run your test code from {workspace},

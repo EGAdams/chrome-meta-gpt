@@ -48,13 +48,13 @@ CONTEXT = """
 ## Development Code File Name
 {code_file_name}
 ## Development Code
-```python
+```swift
 {code}
 ```
 ## Test File Name
 {test_file_name}
 ## Test Code
-```python
+```swift
 {test_code}
 ```
 ## Running Command
