@@ -34,7 +34,7 @@ def main(idea: str, investment: float = 3.0, n_round: int = 5, code_review: bool
     :return:
     """
 
-    # read an ".md" file into the idea variable 
+    # read an ".md" file into the idea variable  
     
     idea = open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/ios_app_prompt.md", 'r').read()
     asyncio.run(startup(idea, investment, n_round, code_review, run_tests))

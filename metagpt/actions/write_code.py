@@ -13,6 +13,8 @@ from metagpt.schema import Message
 from metagpt.utils.common import CodeParser
 from tenacity import retry, stop_after_attempt, wait_fixed
 
+from os import sys
+
 PROMPT_TEMPLATE = """
 NOTICE
 Role: You are a professional engineer; the main goal is to write PEP8 compliant, elegant, modular, easy to read and maintain Swift code.
@@ -84,7 +86,17 @@ class WriteCode(Action):
         file.write(prompt)
         file.close()
         
-        code = await self.write_code(prompt) # switch to 16k model here!  Maybe catch exception and retry with 16k model?
+        # use a try-except block to catch the exception and retry with 16k model
+        try:
+            code = await self.write_code(prompt) 
+        except:
+            # check exception details for maximum length exceeded error
+            if "maximum length exceeded" in str(sys.exc_info()[1]):
+                # switch to 16k model here!
+                self.llm.model = "gpt-3.5-turbo-16k"
+                code = await self.write_code(prompt)
+                self.llm.model = "gpt-3.5-turbo" # switch back to cheaper model
+
         # code_rsp = await self._aask_v1(prompt, "code_rsp", OUTPUT_MAPPING)
         # self._save(context, filename, code)
         return code

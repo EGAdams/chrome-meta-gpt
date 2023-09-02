@@ -203,7 +203,7 @@ class Role:
         self._rc.env.publish_message(msg)
 
     async def _react(self) -> Message:
-        """先想，然后再做"""
+        """先想，然后再做""" # think first, then do
         await self._think()
         logger.debug(f"{self._setting}: {self._rc.state=}, will do {self._rc.todo}")
         return await self._act()

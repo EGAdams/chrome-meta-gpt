@@ -148,6 +148,15 @@ class OpenAIGPTAPI(BaseGPTAPI, RateLimiter):
         self.rpm = int(config.get("RPM", 10))
 
     async def _achat_completion_stream(self, messages: list[dict]) -> str:
+        # write the text located in messages[0].content into system.md file
+        open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/provider/system.md", 'w').write(messages[ 0 ].get("content", ""))
+        open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/provider/user.md", 'w').write(messages[ 1 ].get("content", ""))
+        
+        # ask user to press enter so that we can read the revised files
+        input("Press Enter to continue...")
+        messages[ 0 ][ "content" ] = open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/provider/system.md", 'r').read()
+        messages[ 1 ][ "content" ] = open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/provider/user.md", 'r').read()
+        
         response = await openai.ChatCompletion.acreate(**self._cons_kwargs(messages), stream=True)
 
         # create variables to collect the stream of chunks

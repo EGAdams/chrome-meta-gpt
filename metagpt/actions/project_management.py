@@ -120,7 +120,12 @@ class WriteTasks(Action):
     async def run(self, context):
         prompt = PROMPT_TEMPLATE.format(
             context=context, format_example=FORMAT_EXAMPLE)
-        rsp = await self._aask_v1(prompt, "task", OUTPUT_MAPPING)
+        try:
+            rsp = await self._aask(prompt, "task", OUTPUT_MAPPING)
+        except Exception as e:
+            print( '*** ERROR: retry with 16k model... ***' )
+            rsp = await self._aask_v1(prompt, "task", OUTPUT_MAPPING)
+            
         self._save(context, rsp)
         return rsp
 
