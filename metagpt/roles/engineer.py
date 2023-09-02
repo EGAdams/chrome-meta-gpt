@@ -48,7 +48,7 @@ async def gather_ordered_k(coros, k) -> list:
 
 class Engineer(Role):
     def __init__(self, name="Alex", profile="Engineer", goal="Write elegant, readable, extensible, efficient code",
-                 constraints="The code you write should conform to the Swift API Design Guidelines,be modular, easy to read and maintain",
+                 constraints="The code you write should conform to the Swift API Design Guidelines, adhere to the SOLID Principles of software design, be modular, easy to read and easy to maintain",
                  n_borg=1, use_code_review=False):
         super().__init__(name, profile, goal, constraints)
         self._init_actions([WriteCode])
@@ -147,6 +147,7 @@ class Engineer(Role):
 
         logger.info(f'Done {self.get_workspace()} generating.')
         msg = Message(
+
             content=MSG_SEP.join(code_msg_all),
             role=self.profile,
             cause_by=type(self._rc.todo),

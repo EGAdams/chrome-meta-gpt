@@ -63,7 +63,7 @@ class RoleSetting(BaseModel):
 
 
 class RoleContext(BaseModel):
-    """角色运行时上下文"""
+    """角色运行时上下文""" # role runtime context
     env: 'Environment' = Field(default=None)
     memory: Memory = Field(default_factory=Memory)
     long_term_memory: LongTermMemory = Field(default_factory=LongTermMemory)
@@ -91,7 +91,7 @@ class RoleContext(BaseModel):
 
 
 class Role:
-    """角色/代理"""
+    """角色/代理""" # role / agent
 
     def __init__(self, name="", profile="", goal="", constraints="", desc=""):
         self._llm = LLM()
@@ -117,7 +117,7 @@ class Role:
             self._states.append(f"{idx}. {action}")
 
     def _watch(self, actions: Iterable[Type[Action]]):
-        """监听对应的行为"""
+        """监听对应的行为""" # listen to corresponding behavior
         self._rc.watch.update(actions)
         # check RoleContext after adding watch actions
         self._rc.check(self._role_id)
