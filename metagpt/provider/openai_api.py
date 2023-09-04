@@ -161,8 +161,8 @@ class OpenAIGPTAPI(BaseGPTAPI, RateLimiter):
         except Exception as e:
             print( "exception after entering input... " )
             print( e )
-            # if e contains "Please reduce the length of the messages or completion"
-            if "Please reduce the length of the messages or completion" in str( e ):
+            # if e contains "Please reduce the length"
+            if "Please reduce the length" in str( e ):
                 print( "swapping out model with 16k to handle larger prompt..." )
                 original_llm_model = self.model
                 self.model = "gpt-3.5-turbo-16k"

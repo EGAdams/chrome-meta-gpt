@@ -42,7 +42,7 @@ class BaseGPTAPI(BaseChatbot):
         else:
             message = [self._default_system_msg(), self._user_msg(msg)]
         try:
-            rsp = await self.acompletion_text(message, stream=True)
+            rsp = await self.acompletion_text(message, stream=True) # last call? call g4 here?
         except Exception as e:
             print( "error in base gpt api." )
             print( e )

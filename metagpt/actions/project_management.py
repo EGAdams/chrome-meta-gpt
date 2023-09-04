@@ -105,19 +105,6 @@ class WriteTasks(Action):
 
     def __init__(self, name="CreateTasks", context=None, llm=None):
         super().__init__(name, context, llm)
-
-    def print_arguments( self, prompt="default_prompt", 
-                         task="default_task", 
-                         output_mapping=[ "one_map", "two_map" ],
-                         fourth_ghost="fourth_ghost" ):
-        print( "prompt: " + prompt )
-        print( "task: " + task )
-        # print the contents of the output_mapping list
-        # for i in range( len( output_mapping ) ):
-        #     print( "output_mapping[" + str( i ) + "]: " + output_mapping[i] )
-            
-        # print( "output_mapping: " + output_mapping ) # can only concatenate str (not "list") to str
-        print( "fourth_ghost: " + fourth_ghost )
     
     def _save(self, context, rsp):
         ws_name = CodeParser.parse_str(
@@ -142,26 +129,24 @@ class WriteTasks(Action):
         file = open("write_tasks_prompt.md", "r")
         prompt = file.read()
         file.close() 
-        self.print_arguments( prompt, "task", OUTPUT_MAPPING, "fourth_ghost" )
+        print(f"Prompt: {prompt}")
+        print(f"Task: 'task'")
+        print(f"Output Mapping: {OUTPUT_MAPPING}")
+
         try:
-            rsp = await self._aask(prompt, "task", OUTPUT_MAPPING)
+            rsp = await self._aask_v1(prompt, "task", OUTPUT_MAPPING)
         except Exception as e:
             print( e )
             print( '*** ERROR: retry with 16k model... ***' )
-            rsp = await self._aask(prompt, "task", OUTPUT_MAPPING)
+            rsp = await self._aask_v1(prompt, "task", OUTPUT_MAPPING)
             
         self._save(context, rsp)
         return rsp
-    
-    
-        
-
 
 class AssignTasks(Action):
     async def run(self, *args, **kwargs):
         # Here you should implement the actual action
         pass
-
 
 # git init
 # git add README.md

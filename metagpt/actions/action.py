@@ -72,7 +72,7 @@ class Action(ABC):
         if not system_msgs:
             system_msgs = []
         system_msgs.append(self.prefix)
-        return await self.llm.aask(prompt, system_msgs)
+        return await self.llm.aask(prompt, system_msgs) # last call? call g4 here?
 
     @retry(stop=stop_after_attempt(2), wait=wait_fixed(1))
     async def _aask_v1(self, prompt: str, output_class_name: str,

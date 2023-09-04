@@ -71,7 +71,7 @@ class WriteDesign(Action):
         else:
             content = system_design
             ws_name = CodeParser.parse_str(
-                block="Swift Package Name", text=system_design)
+                block="Swift Package Name", text=system_design)  # pass in lang = swift here?
         workspace = WORKSPACE_ROOT / ws_name
         self.recreate_workspace(workspace)
         docs_path = workspace / 'docs'

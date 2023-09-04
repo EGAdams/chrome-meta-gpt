@@ -71,7 +71,7 @@ class WriteCode(Action):
 
     @retry(stop=stop_after_attempt(2), wait=wait_fixed(1))
     async def write_code(self, prompt):
-        code_rsp = await self._aask(prompt)
+        code_rsp = await self._aask(prompt)  # call g4 here?
         code = CodeParser.parse_code(block="", text=code_rsp)
         return code
 
@@ -88,9 +88,10 @@ class WriteCode(Action):
         # use a try-except block to catch the exception and retry with 16k model
         try:
             code = await self.write_code(prompt) 
-        except:
+        except Exception as e:
+            print( e )
             # check exception details for maximum length exceeded error
-            if "maximum length exceeded" in str(sys.exc_info()[1]):
+            if "maximum length exceeded" in str( e ):
                 # switch to 16k model here!
                 self.llm.model = "gpt-3.5-turbo-16k"
                 code = await self.write_code(prompt)
