@@ -156,9 +156,21 @@ class OpenAIGPTAPI(BaseGPTAPI, RateLimiter):
         input("Press Enter to continue...")
         messages[ 0 ][ "content" ] = open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/provider/system.md", 'r').read()
         messages[ 1 ][ "content" ] = open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/provider/user.md", 'r').read()
-        
-        response = await openai.ChatCompletion.acreate(**self._cons_kwargs(messages), stream=True)
-
+        try:
+            response = await openai.ChatCompletion.acreate(**self._cons_kwargs(messages), stream=True)
+        except Exception as e:
+            print( "exception after entering input... " )
+            print( e )
+            # if e contains "Please reduce the length of the messages or completion"
+            if "Please reduce the length of the messages or completion" in str( e ):
+                print( "swapping out model with 16k to handle larger prompt..." )
+                original_llm_model = self.model
+                self.model = "gpt-3.5-turbo-16k"
+                print( "running again with 16k model..." )
+                response = await openai.ChatCompletion.acreate(**self._cons_kwargs(messages), stream=True)
+                print( "finished query with 16k model.  swapping back to original model..." )
+                self.model = original_llm_model
+            
         # create variables to collect the stream of chunks
         collected_chunks = []
         collected_messages = []

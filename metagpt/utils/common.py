@@ -24,6 +24,31 @@ def check_cmd_exists(command) -> int:
     result = os.system(check_command)
     return result
 
+def transform_requirement_pool(requirement_pool: list) -> list:
+    """
+    Transforms the 'Requirement Pool' list from a list of strings to a list of tuples.
+    """
+    transformed_pool = []
+    
+    for item in requirement_pool:
+            # Split the string at the last occurrence of a space followed by a parenthesis.
+            # This will give us the requirement description and its priority.
+            description, priority = item.rsplit(' ', 1)
+            
+            # Remove the parenthesis from the priority.
+            priority = priority.strip("()")
+            
+            transformed_pool.append((description, priority))
+    
+    return transformed_pool
+
+def needs_transformation(requirement_pool: list) -> bool:
+    """
+    Check if the 'Requirement Pool' needs transformation.
+    """
+    # Check if the first item is not a tuple (assuming non-empty list)
+    return bool(requirement_pool) and not isinstance(requirement_pool[0], tuple)
+
 
 class OutputParser:
 
@@ -121,10 +146,12 @@ class OutputParser:
         block_dict = cls.parse_blocks(data)
         parsed_data = {}
         for block, content in block_dict.items():
+            print( block )
             # 尝试去除code标记
             try:
                 content = cls.parse_code(text=content)
-            except Exception:
+            except Exception as e:
+                print( e )
                 pass
             typing_define = mapping.get(block, None)
             if isinstance(typing_define, tuple):
@@ -144,6 +171,9 @@ class OutputParser:
             #         content = cls.parse_str(text=content)
             #     except Exception:
             #         pass
+            if( block=="Requirement Pool" ):
+                if( needs_transformation( content )):
+                    content = transform_requirement_pool( content )
             parsed_data[block] = content
         return parsed_data
 

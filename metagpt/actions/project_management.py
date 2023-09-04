@@ -106,6 +106,19 @@ class WriteTasks(Action):
     def __init__(self, name="CreateTasks", context=None, llm=None):
         super().__init__(name, context, llm)
 
+    def print_arguments( self, prompt="default_prompt", 
+                         task="default_task", 
+                         output_mapping=[ "one_map", "two_map" ],
+                         fourth_ghost="fourth_ghost" ):
+        print( "prompt: " + prompt )
+        print( "task: " + task )
+        # print the contents of the output_mapping list
+        # for i in range( len( output_mapping ) ):
+        #     print( "output_mapping[" + str( i ) + "]: " + output_mapping[i] )
+            
+        # print( "output_mapping: " + output_mapping ) # can only concatenate str (not "list") to str
+        print( "fourth_ghost: " + fourth_ghost )
+    
     def _save(self, context, rsp):
         ws_name = CodeParser.parse_str(
             block="Swift Package Name", text=context[-1].content)
@@ -118,16 +131,30 @@ class WriteTasks(Action):
             "Required Swift third-party packages").strip('"\n'))
 
     async def run(self, context):
-        prompt = PROMPT_TEMPLATE.format(
-            context=context, format_example=FORMAT_EXAMPLE)
+        prompt = PROMPT_TEMPLATE.format( context=context, format_example=FORMAT_EXAMPLE )
+        # write prompt to temp file so we can read it first
+        file = open("write_tasks_prompt.md", "w")
+        file.write(prompt)
+        file.close()
+        # enter to continue...
+        input( "Press Enter to continue..." )
+        # read prompt from file and assign it to prompt
+        file = open("write_tasks_prompt.md", "r")
+        prompt = file.read()
+        file.close() 
+        self.print_arguments( prompt, "task", OUTPUT_MAPPING, "fourth_ghost" )
         try:
             rsp = await self._aask(prompt, "task", OUTPUT_MAPPING)
         except Exception as e:
+            print( e )
             print( '*** ERROR: retry with 16k model... ***' )
-            rsp = await self._aask_v1(prompt, "task", OUTPUT_MAPPING)
+            rsp = await self._aask(prompt, "task", OUTPUT_MAPPING)
             
         self._save(context, rsp)
         return rsp
+    
+    
+        
 
 
 class AssignTasks(Action):

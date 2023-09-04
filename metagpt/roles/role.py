@@ -83,6 +83,7 @@ class RoleContext(BaseModel):
     @property
     def important_memory(self) -> list[Message]:
         """获得关注动作对应的信息"""
+        print ( "important_memory( self ) called... " )
         return self.memory.get_by_actions(self.watch)
 
     @property
@@ -165,7 +166,25 @@ class Role:
         #                                history=self.history)
 
         logger.info(f"{self._setting}: ready to {self._rc.todo}")
-        response = await self._rc.todo.run(self._rc.important_memory)
+        # try / catch block
+        try:
+            response = await self._rc.todo.run( self._rc.important_memory )
+        except Exception as e:
+            print( e )
+            # if e contains "Please reduce the length of the messages or completion"
+            if "Please reduce the length of the messages or completion" in str( e ):
+                print( "swapping out model with 16k to handle larger prompt..." )
+                original_llm_model = self._llm.model
+                self._llm.model = "gpt-3.5-turbo-16k"
+                print( "running again with 16k model..." )
+                response = await self._rc.todo.run( self._rc.important_memory )
+                print( "finished query with 16k model.  swapping back to original model..." )
+                self._llm.model = original_llm_model
+            else:
+                # print the contents of e
+                print( e )
+        
+        print( "done getting response.  resuming role::_act() ... " )
         # logger.info(response)
         if isinstance(response, ActionOutput):
             msg = Message(content=response.content, instruct_content=response.instruct_content,
@@ -206,6 +225,7 @@ class Role:
         """先想，然后再做""" # think first, then do
         await self._think()
         logger.debug(f"{self._setting}: {self._rc.state=}, will do {self._rc.todo}")
+        print ( "calling self._act() for role: " + str( self._setting ) )
         return await self._act()
 
     def recv(self, message: Message) -> None:
@@ -237,6 +257,7 @@ class Role:
             logger.debug(f"{self._setting}: no news. waiting.")
             return
 
+        print ( "calling self._react() for role: " + str( self._setting ) )
         rsp = await self._react()
         # 将回复发布到环境，等待下一个订阅者处理
         self._publish_message(rsp)

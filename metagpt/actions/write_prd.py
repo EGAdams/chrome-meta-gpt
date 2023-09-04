@@ -11,6 +11,9 @@ from metagpt.actions import Action, ActionOutput
 from metagpt.actions.search_and_summarize import SearchAndSummarize
 from metagpt.logs import logger
 
+import traceback
+from pprint import pprint
+
 PROMPT_TEMPLATE = """
 # Context
 ## Original Requirements
@@ -142,5 +145,21 @@ class WritePRD(Action):
         prompt = PROMPT_TEMPLATE.format(requirements=requirements, search_information=info,
                                         format_example=FORMAT_EXAMPLE)
         logger.debug(prompt)
-        prd = await self._aask_v1(prompt, "prd", OUTPUT_MAPPING)
+        # check OUTPUT_MAPPING key "Requirements POOL" for being a valid tuple
+        # print( OUTPUT_MAPPING["Requirement Pool"] )
+        print( type( OUTPUT_MAPPING["Requirement Pool"] ))
+        pprint(OUTPUT_MAPPING)
+        try:
+            print( type( OUTPUT_MAPPING["Requirement Pool"] ))
+            pprint(OUTPUT_MAPPING)
+            prd = await self._aask_v1( prompt, "prd", OUTPUT_MAPPING )
+        except Exception as e:
+            # print exception cause
+            print( "exception inside write prd. " )
+            print("Exception Traceback:")
+            traceback.print_exc()
+            print("Exception:", e)
+            # exit
+            exit( 1 )
+        
         return prd

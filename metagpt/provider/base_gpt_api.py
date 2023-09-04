@@ -41,7 +41,12 @@ class BaseGPTAPI(BaseChatbot):
             message = self._system_msgs(system_msgs) + [self._user_msg(msg)]
         else:
             message = [self._default_system_msg(), self._user_msg(msg)]
-        rsp = await self.acompletion_text(message, stream=True)
+        try:
+            rsp = await self.acompletion_text(message, stream=True)
+        except Exception as e:
+            print( "error in base gpt api." )
+            print( e )
+            
         logger.debug(message)
         # logger.debug(rsp)
         return rsp
