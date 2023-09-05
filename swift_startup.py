@@ -24,7 +24,7 @@ async def startup(idea: str, investment: float = 3.0, n_round: int = 5,
     await company.run(n_round=n_round)
 
 
-def main(idea: str, investment: float = 3.0, n_round: int = 5, code_review: bool = False, run_tests: bool = False):
+def main(idea: str = "", investment: float = 3.0, n_round: int = 5, code_review: bool = False, run_tests: bool = False):
     """
     We are a software startup comprised of AI. By investing in us, you are empowering a future filled with limitless possibilities.
     :param idea: Your innovative idea, such as "Creating a snake game."
@@ -36,7 +36,7 @@ def main(idea: str, investment: float = 3.0, n_round: int = 5, code_review: bool
 
     # read an ".md" file into the idea variable  
     
-    idea = open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/ios_app_prompt.md", 'r').read()
+    idea = open("/home/adamsl/linuxBash/chrome-meta-gpt/metagpt/gauge_focused_prompt.md", 'r').read()
     asyncio.run(startup(idea, investment, n_round, code_review, run_tests))
 
 
