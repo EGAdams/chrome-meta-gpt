@@ -212,6 +212,7 @@ class CodeParser:
             text = cls.parse_block(block, text)
         pattern = rf'```{lang}.*?\s+(.*?)```'
         match = re.search(pattern, text, re.DOTALL)
+        print( match )
         if match:
             code = match.group(1)
         else:
